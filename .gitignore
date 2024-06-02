@@ -1,3 +1,5 @@
 venv
 .idea
 question.py
+__pycache__
+sections/__pycache__
