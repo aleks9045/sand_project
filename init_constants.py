@@ -1,0 +1,13 @@
+import pygame as pg
+
+
+FPS = 60
+
+SCREEN_WIDTH, SCREEN_HEIGHT = 900, 600
+SAND_AREA_WIDTH, SAND_AREA_HEIGHT = 600, 600
+
+SIDE_MENU_WIDTH = SCREEN_WIDTH - SAND_AREA_WIDTH
+
+screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+clock = pg.time.Clock()
+
