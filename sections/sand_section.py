@@ -6,10 +6,10 @@ from init_constants import *
 class SandSection:
     def __init__(self):
         self.sand_surface = pg.Surface((SAND_AREA_WIDTH, SAND_AREA_HEIGHT))
-        self.sand_randomness = 0
+        self.sand_randomness = sand_randomness
         self.sand_randomness_arr = tuple(r for r in range(-self.sand_randomness, self.sand_randomness + 1))
 
-        self.sand_widthness = 1
+        self.sand_widthness = sand_widthness
 
         self.old_arr = []
         self.current_arr = self.make_array_of(0)
@@ -110,20 +110,20 @@ class SandSection:
 
                     if self.detect_bottom_of_window(j):
                         self.make_current_tile_sand(i, j)
+                        continue
 
                     self.below_tile = self.get_below_tile(i, j)
                     self.right_below_tile, self.left_below_tile = None, None
 
                     if not self.on_right_border(i):
                         self.right_below_tile = self.get_right_below_tile(i, j)
-
                     if not self.on_left_border(i):
                         self.left_below_tile = self.get_left_below_tile(i, j)
 
                     if self.below_tile_is_free() and self.not_snow_mode:
                         self.make_below_tile_sand(i, j)
-
                     else:
+
                         self.right_tile = self.get_right_tile(i, j)
                         self.left_tile = self.get_left_tile(i, j)
 
@@ -137,19 +137,23 @@ class SandSection:
                         elif (not self.right_below_tile_is_free() or self.right_below_tile is None) and \
                                 self.left_below_tile_is_free():
                             self.make_left_below_tile_sand(i, j)
-
                         else:
+                            if self.below_tile_is_free() and not self.not_snow_mode:
+                                self.make_below_tile_sand(i, j)
+                                continue
                             self.make_current_tile_sand(i, j)
 
     def draw_rects(self):
-        pg.draw.rect(self.sand_surface, "black", (0, 0, SAND_AREA_WIDTH - 1, SAND_AREA_HEIGHT - one_tile_height * 2))
+        # pg.draw.rect(self.sand_surface, "black", (0, 0, SAND_AREA_WIDTH - 1, SAND_AREA_HEIGHT - one_tile_height * 2))
         for i in range(cols):
             for j in range(rows):
-                if self.old_arr[i][j] == self.current_arr[i][j] and self.get_below_tile(i, j) != 1:
+                if self.old_arr[i][j] == self.current_arr[i][j] and self.current_arr[i][j] != 1:  # WARNING
                     continue
                 rect = pg.Rect(i * one_tile_width, j * one_tile_height, one_tile_width, one_tile_height)
                 if self.current_arr[i][j] == 1:
                     pg.draw.rect(self.sand_surface, self.sand_color, rect)
+                else:
+                    pg.draw.rect(self.sand_surface, "black", rect)
         pg.draw.rect(self.sand_surface, "white", (0, 0, SAND_AREA_WIDTH, SAND_AREA_HEIGHT), width=1)
         screen.blit(self.sand_surface, (0, 0))
 
