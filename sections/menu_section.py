@@ -85,22 +85,25 @@ class MenuSection:
                 self.current_randomness_color = self.active_input_color
             else:
                 self.current_randomness_color = self.inactive_input_color
+
             if self.collidepoint_side_menu(self.clear_button, pg.mouse.get_pos()):
                 sand_section_cls.current_arr = sand_section_cls.make_array_of(0)
-                sand_section_cls.old_arr = sand_section_cls.make_array_of(1)
-                sand_section_cls.draw_rects()
+                sand_section_cls.sand_surface.fill("Black")
+
             if self.collidepoint_side_menu(self.snow_button, pg.mouse.get_pos()):
                 sand_section_cls.not_snow_mode = not sand_section_cls.not_snow_mode
                 if sand_section_cls.not_snow_mode:
                     sand_section_cls.sand_color = (252, 221, 118)
                 else:
                     sand_section_cls.sand_color = "snow"
+
         if event.type == pg.KEYDOWN:
             if self.current_randomness_color == self.active_input_color:
                 if event.key == pg.K_BACKSPACE:
                     self.randomness_text = self.randomness_text[:-1]
                 else:
                     self.randomness_text += event.unicode
+
         self.set_randomness()
 
 

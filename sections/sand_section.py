@@ -2,16 +2,10 @@ from random import choice
 
 from init_constants import *
 
-one_tile_width = 5
-one_tile_height = 5
-
-cols = SAND_AREA_WIDTH // one_tile_width
-rows = SAND_AREA_HEIGHT // one_tile_height
-
 
 class SandSection:
-    def __init__(self, main_screen: pg.surface):
-        self.screen = main_screen
+    def __init__(self):
+        self.sand_surface = pg.Surface((SAND_AREA_WIDTH, SAND_AREA_HEIGHT))
         self.sand_randomness = 0
         self.sand_randomness_arr = tuple(r for r in range(-self.sand_randomness, self.sand_randomness + 1))
 
@@ -19,7 +13,7 @@ class SandSection:
 
         self.old_arr = []
         self.current_arr = self.make_array_of(0)
-        self.sand_color = (252, 221, 118, 10)
+        self.sand_color = (252, 221, 118)
 
         self.below_tile = None
         self.right_below_tile, self.left_below_tile = None, None
@@ -148,16 +142,16 @@ class SandSection:
                             self.make_current_tile_sand(i, j)
 
     def draw_rects(self):
+        pg.draw.rect(self.sand_surface, "black", (0, 0, SAND_AREA_WIDTH - 1, SAND_AREA_HEIGHT - one_tile_height * 2))
         for i in range(cols):
             for j in range(rows):
-                if self.old_arr[i][j] == self.current_arr[i][j] and self.current_arr[i][j + 1] != 1:
+                if self.old_arr[i][j] == self.current_arr[i][j] and self.get_below_tile(i, j) != 1:
                     continue
                 rect = pg.Rect(i * one_tile_width, j * one_tile_height, one_tile_width, one_tile_height)
                 if self.current_arr[i][j] == 1:
-                    pg.draw.rect(self.screen, self.sand_color, rect)
-                elif self.current_arr[i][j] == 0:
-                    pg.draw.rect(self.screen, "black", rect)
-        pg.draw.rect(self.screen, "white", (0, 0, SAND_AREA_WIDTH, SAND_AREA_HEIGHT), width=1)
+                    pg.draw.rect(self.sand_surface, self.sand_color, rect)
+        pg.draw.rect(self.sand_surface, "white", (0, 0, SAND_AREA_WIDTH, SAND_AREA_HEIGHT), width=1)
+        screen.blit(self.sand_surface, (0, 0))
 
     def add_grains_randomly(self, x: int, y: int):
         self.sand_randomness_arr = tuple(r for r in range(-self.sand_randomness, self.sand_randomness + 1))
@@ -213,4 +207,4 @@ class SandSection:
                 self.sand_widthness = 1
 
 
-sand_section_cls = SandSection(screen)
+sand_section_cls = SandSection()
