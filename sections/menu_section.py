@@ -87,7 +87,7 @@ class MenuSection:
                 self.current_randomness_color = self.inactive_input_color
 
             if self.collidepoint_side_menu(self.clear_button, pg.mouse.get_pos()):
-                sand_section_cls.current_arr = sand_section_cls.make_array_of(0)
+                sand_section_cls.current_arr = sand_section_cls.make_array_of_zeros()
                 sand_section_cls.sand_surface.fill("Black")
 
             if self.collidepoint_side_menu(self.snow_button, pg.mouse.get_pos()):

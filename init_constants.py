@@ -8,8 +8,8 @@ SAND_AREA_WIDTH, SAND_AREA_HEIGHT = 601, 601
 
 SIDE_MENU_WIDTH = SCREEN_WIDTH - SAND_AREA_WIDTH
 
-one_tile_width = 4
-one_tile_height = 4
+one_tile_width = 5
+one_tile_height = 5
 
 cols = SAND_AREA_WIDTH // one_tile_width
 rows = SAND_AREA_HEIGHT // one_tile_height

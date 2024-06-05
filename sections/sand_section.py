@@ -1,5 +1,4 @@
 from random import choice
-
 from init_constants import *
 
 
@@ -12,7 +11,7 @@ class SandSection:
         self.sand_widthness = sand_widthness
 
         self.old_arr = []
-        self.current_arr = self.make_array_of(0)
+        self.current_arr = self.make_array_of_zeros()
         self.sand_color = (252, 221, 118)
 
         self.below_tile = None
@@ -25,10 +24,10 @@ class SandSection:
         self.arr_pos_x, self.arr_pos_y = None, None
 
     @staticmethod
-    def make_array_of(number: int):
+    def make_array_of_zeros():
         new_arr = []
         for _ in range(cols + 1):
-            new_arr.append([number] * (rows + 1))
+            new_arr.append([0] * (rows + 1))
         return new_arr
 
     def detect_sand(self, i: int, j: int):
@@ -102,7 +101,7 @@ class SandSection:
 
     def check_changes(self):
         self.old_arr = self.current_arr
-        self.current_arr = self.make_array_of(0)
+        self.current_arr = self.make_array_of_zeros()
 
         for i in range(cols):
             for j in range(rows):
@@ -144,10 +143,9 @@ class SandSection:
                             self.make_current_tile_sand(i, j)
 
     def draw_rects(self):
-        # pg.draw.rect(self.sand_surface, "black", (0, 0, SAND_AREA_WIDTH - 1, SAND_AREA_HEIGHT - one_tile_height * 2))
         for i in range(cols):
             for j in range(rows):
-                if self.old_arr[i][j] == self.current_arr[i][j] and self.current_arr[i][j] != 1:  # WARNING
+                if self.old_arr[i][j] == self.current_arr[i][j] and self.current_arr[i][j] != 1:
                     continue
                 rect = pg.Rect(i * one_tile_width, j * one_tile_height, one_tile_width, one_tile_height)
                 if self.current_arr[i][j] == 1:

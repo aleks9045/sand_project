@@ -7,7 +7,7 @@ def testing():
     start_pos = 500, 300
     pyautogui.scroll(2000)
     pyautogui.sleep(0.1)
-    for i in range(20):
+    for i in range(3):
         pyautogui.moveTo(start_pos)
         pyautogui.drag(500, 0, 3)
 
